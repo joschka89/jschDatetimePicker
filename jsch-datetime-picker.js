@@ -1,15 +1,15 @@
 const inputElement=document.getElementById('jsch-datetime-picker');
 
-inputElement.onfocus = function() {
+document.getElementById('jsch-datetime-picker').onclick = function() {
     jschRenderPicker();
 }
 
 function jschRenderPicker() {
     jschInsertToPosition();
     jschChooser();
-    /*document.getElementById('jsch-close').onclick = function() {
-        document.getElementById('datetimepicker').remove();
-    } */
+    document.getElementById('jsch-backstep').onclick = function() {
+        jschBackStep(arr);
+    }           
 }
 
 function jschInsertToPosition() {
@@ -20,6 +20,7 @@ function jschInsertToPosition() {
     document.body.innerHTML+=`<div class="jsch-datetime-picker" id="datetimepicker" 
     style="top:${t}px;left:${l}px">
         <div class='jsch-datetime-picker-nav'>
+            <div id='jsch-backstep'><</div>    
             <div id='jsch-choose'>Year</div>
             <div id='jsch-close'>x</div>
         </div>
@@ -54,6 +55,8 @@ function jschChooser() {
     var id=jschStepHandler();
     var sign="";
     var nextchoose="Year";
+    const arr=[];
+
     if(id=='jsch-first-step') {
         element.innerHTML=jschFirstStepChoose();
         nextchoose="Year";
@@ -95,14 +98,29 @@ function jschChooser() {
         for(var child of children) {
             child.onclick = function(e) {         
                 var inputval=jschAddInputValue();          
-                document.getElementById('jsch-choose').innerHTML=nextchoose;                
-                document.getElementById('jsch-datetime-picker').value=inputval+e.target.innerText+sign;                
-                jschChooser();                  
+                document.getElementById('jsch-choose').innerHTML=nextchoose;                                             
+                arr.push(inputval+e.target.innerText+sign);
+                jschInsertValue(arr);              
+                jschChooser();                           
             }
         }     
     } else {
         document.getElementById('datetimepicker').remove();
     }   
+}
+
+function jschBackStep(arr) {
+    arr.pop();
+    jschChooser(); 
+}
+
+function jschInsertValue(arr) {
+    var str="";
+    for(s of arr) {
+        str+=s;
+    }
+
+    document.getElementById('jsch-datetime-picker').value=str;
 }
 
 function jschFirstStepChoose() {

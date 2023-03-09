@@ -15,17 +15,17 @@
     border-bottom: 1px solid #f7f7f7;
     background-color:silver;
 }
-
-.jsch-datetime-picker-nav div:nth-child(1) {
-    display:inline-block;
-    width:48%;
+.jsch-datetime-picker-nav div {
     text-align:center;
 }
-
-.jsch-datetime-picker-nav div:nth-child(2) {
+.jsch-datetime-picker-nav div:nth-child(1) {
     display:inline-block;
-    width:48%;
-    text-align:center;
+    width:33%;
+}
+
+.jsch-datetime-picker-nav div:nth-child(3) {
+    display:inline-block;
+    width:33%;
 }
 
 .jsch-datetimepicker-area {
