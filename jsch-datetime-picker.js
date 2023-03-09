@@ -20,7 +20,7 @@ function jschInsertToPosition() {
     document.body.innerHTML+=`<div class="jsch-datetime-picker" id="datetimepicker" 
     style="top:${t}px;left:${l}px">
         <div class='jsch-datetime-picker-nav'>
-            <div><<<</div>
+            <div id='jsch-choose'>Year</div>
             <div id='jsch-close'>x</div>
         </div>
         <div class="jsch-datetimepicker-area" id="jsch-datetimepicker-area"></div>
@@ -53,33 +53,40 @@ function jschChooser() {
 
     var id=jschStepHandler();
     var sign="";
-    console.log(id);
+    var nextchoose="Year";
     if(id=='jsch-first-step') {
         element.innerHTML=jschFirstStepChoose();
+        nextchoose="Year";
         sign="";
     }
     if(id=='jsch-second-step') {
         element.innerHTML=jschSecondStepChoose();
+        nextchoose="Month";
         sign="-";
     }
     if(id=='jsch-third-step') {
         element.innerHTML=jschThirdStepChoose();
+        nextchoose="Day";
         sign="-";
     }
     if(id=='jsch-fourth-step') {
         element.innerHTML=jschFourthStepChoose();
+        nextchoose="Hour";
         sign=" ";
     }
     if(id=='jsch-fifth-step') {
         element.innerHTML=jschFifthStepChoose();
+        nextchoose="Minute";
         sign=":";
     }
     if(id=='jsch-sixth-step') {
         element.innerHTML=jschSixthStepChoose();
+        nextchoose="Second";
         sign=":";
     }    
     if(id=='jsch-seventh-step') {
         element.innerHTML=jschSeventhStepChoose();
+        nextchoose="";
         sign="";
     }    
     if(id!='end') {
@@ -87,9 +94,10 @@ function jschChooser() {
         
         for(var child of children) {
             child.onclick = function(e) {         
-                var inputval=jschAddInputValue();
-                document.getElementById('jsch-datetime-picker').value=inputval+e.target.innerText+sign;
-                jschChooser();          
+                var inputval=jschAddInputValue();          
+                document.getElementById('jsch-choose').innerHTML=nextchoose;                
+                document.getElementById('jsch-datetime-picker').value=inputval+e.target.innerText+sign;                
+                jschChooser();                  
             }
         }     
     } else {
@@ -158,7 +166,7 @@ function jschFourthStepChoose() {
 
 function jschFifthStepChoose() {  
     var btns='';
-    for(i=1;i<=24;i++) {
+    for(i=1;i<24;i++) {
         if(i<10) {
             i='0'+i;
         }
@@ -175,7 +183,7 @@ function jschFifthStepChoose() {
 
 function jschSixthStepChoose() {  
     var btns='';
-    for(i=1;i<=60;i++) {
+    for(i=0;i<60;i++) {
         if(i<10) {
             i='0'+i;
         }
@@ -191,7 +199,7 @@ function jschSixthStepChoose() {
 
 function jschSeventhStepChoose() {  
     var btns='';
-    for(i=1;i<=60;i++) {
+    for(i=0;i<60;i++) {
         if(i<10) {
             i='0'+i;
         }
