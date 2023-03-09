@@ -1,232 +1,157 @@
-const inputElement=document.getElementById('jsch-datetime-picker');
+const inputElements=document.getElementsByClassName('jsch-datetime-picker');
+console.log(inputElements);
 
-document.getElementById('jsch-datetime-picker').onclick = function() {
-    jschRenderPicker();
-}
+for(var inputElement of inputElements) {
+    
+    var e=0;
 
-function jschRenderPicker() {
-    jschInsertToPosition();
-    jschChooser();
-    document.getElementById('jsch-backstep').onclick = function() {
-        jschBackStep(arr);
-    }           
-}
-
-function jschInsertToPosition() {
-    var rect = inputElement.getBoundingClientRect();
-    var inputHeight=inputElement.offsetHeight ;
-    var t=rect.top+inputHeight+2;
-    var l=rect.left;
-    document.body.innerHTML+=`<div class="jsch-datetime-picker" id="datetimepicker" 
-    style="top:${t}px;left:${l}px">
-        <div class='jsch-datetime-picker-nav'>
-            <div id='jsch-backstep'><</div>    
-            <div id='jsch-choose'>Year</div>
-            <div id='jsch-close'>x</div>
-        </div>
-        <div class="jsch-datetimepicker-area" id="jsch-datetimepicker-area"></div>
-    </div>`;
-}
-
-function jschAddInputValue() {
-    var inputLength=document.getElementById('jsch-datetime-picker').value;
-    return inputLength;
-}
-
-function jschStepHandler() {   
-    var inputLength=jschAddInputValue().length;
-    var id;
-    switch(inputLength) {
-        case 0: id='jsch-first-step'; break;
-        case 2: id='jsch-second-step'; break;
-        case 5: id='jsch-third-step'; break;
-        case 8: id='jsch-fourth-step'; break;
-        case 11: id='jsch-fifth-step'; break;
-        case 14: id='jsch-sixth-step'; break;
-        case 17: id='jsch-seventh-step'; break;
-        case 19: id='end'; break;
-    }
-    return id;
-}
-
-function jschChooser() {
-    var element=document.getElementById('jsch-datetimepicker-area');
-
-    var id=jschStepHandler();
-    var sign="";
-    var nextchoose="Year";
     const arr=[];
+    inputElement.onclick = function() {
+        jschRenderPicker();
+    }
 
-    if(id=='jsch-first-step') {
-        element.innerHTML=jschFirstStepChoose();
-        nextchoose="Year";
-        sign="";
-    }
-    if(id=='jsch-second-step') {
-        element.innerHTML=jschSecondStepChoose();
-        nextchoose="Month";
-        sign="-";
-    }
-    if(id=='jsch-third-step') {
-        element.innerHTML=jschThirdStepChoose();
-        nextchoose="Day";
-        sign="-";
-    }
-    if(id=='jsch-fourth-step') {
-        element.innerHTML=jschFourthStepChoose();
-        nextchoose="Hour";
-        sign=" ";
-    }
-    if(id=='jsch-fifth-step') {
-        element.innerHTML=jschFifthStepChoose();
-        nextchoose="Minute";
-        sign=":";
-    }
-    if(id=='jsch-sixth-step') {
-        element.innerHTML=jschSixthStepChoose();
-        nextchoose="Second";
-        sign=":";
-    }    
-    if(id=='jsch-seventh-step') {
-        element.innerHTML=jschSeventhStepChoose();
-        nextchoose="";
-        sign="";
-    }    
-    if(id!='end') {
-        var children=document.getElementById(id).children;   
+    function jschRenderPicker() {
+        jschInsertBoxToPosition();
+        jschChooser();
         
+        document.getElementById('jsch-backstep-'+e).onclick = function() {
+            jschBackStep();
+        }         
+        document.getElementById('jsch-close-'+e).onclick = function() {
+            jschClose();
+        }        
+    }
+
+    function jschInsertBoxToPosition() {
+        var rect = inputElement.getBoundingClientRect();
+        var inputHeight=inputElement.offsetHeight ;
+        var t=rect.top+inputHeight+2;
+        var l=rect.left;
+        document.body.innerHTML+=`<div class="jsch-datetime-picker-style" id="datetimepicker-${e}" 
+        style="top:${t}px;left:${l}px">
+            <div class='jsch-datetime-picker-nav'>
+                <div id='jsch-backstep-${e}'><</div>    
+                <div id='jsch-choose-${e}'>Year</div>
+                <div id='jsch-close-${e}'>x</div>
+            </div>
+            <div class="jsch-datetimepicker-area" id="jsch-datetimepicker-area-${e}"></div>
+        </div>`;
+    }
+
+    function jschAddInputValue() {
+        var inputLength=inputElement.value;
+        return inputLength;
+    }
+
+    function jschStepHandler() {   
+        var inputLength=jschAddInputValue().length;
+        var id;
+        switch(inputLength) {
+            case 0: step=1; break;
+            case 2: step=2; break;
+            case 5: step=3; break;
+            case 8: step=4; break;
+            case 11: step=5; break;
+            case 14: step=6; break;
+            case 17: step=7; break;
+        }
+        return step;
+    }
+
+    function jschChooser() {
+        var element=document.getElementById('jsch-datetimepicker-area-'+e);
+        var arrayy=[
+            ["Year",""],
+            ["Month","-"],
+            ["Day","-"],
+            ["Hour"," "],
+            ["Minute",":"],
+            ["Seconds",":"],
+            ["",""],
+        ];
+        
+        var step=jschStepHandler();
+        var sign=arrayy[step-1][1];
+        var nextchoose=arrayy[step-1][0];
+
+        element.innerHTML=jschSteps(step);
+
+        var children=document.getElementById(`jsch-${step}-step-${e}`).children;   
+            
         for(var child of children) {
             child.onclick = function(e) {         
                 var inputval=jschAddInputValue();          
-                document.getElementById('jsch-choose').innerHTML=nextchoose;                                             
-                arr.push(inputval+e.target.innerText+sign);
-                jschInsertValue(arr);              
-                jschChooser();                           
+                //document.getElementById('jsch-choose-'+e).innerHTML=nextchoose;                                             
+                arr.push(inputval+e.target.innerText+sign);  
+                jschStep();                   
             }
         }     
-    } else {
-        document.getElementById('datetimepicker').remove();
-    }   
-}
 
-function jschBackStep(arr) {
-    arr.pop();
-    jschChooser(); 
-}
-
-function jschInsertValue(arr) {
-    var str="";
-    for(s of arr) {
-        str+=s;
     }
 
-    document.getElementById('jsch-datetime-picker').value=str;
-}
+    function jschBackStep() {
+        arr.pop();
+        jschRenderValue(arr)
+        jschChooser(); 
+    }
 
-function jschFirstStepChoose() {
-    str=`
-        <div class='jsch-datetime-picker-first-step' id='jsch-first-step'>
-            <div>19</div>
-            <div>20</div>
-        </div>
-    `;
-    return str;
-}
+    function jschStep() {
+        jschRenderValue(arr); 
+        jschChooser(); 
+    }
 
-function jschSecondStepChoose() {  
-    var btns='';
-    for(i=1;i<100;i++) {
-        if(i<10) {
-            i='0'+i;
+    function jschClose() {    
+        document.getElementById('datetimepicker-'+e).remove;
+        //arr=[];
+        jschRenderValue(arr); 
+        jschChooser();     
+    }
+
+    function jschRenderValue(arr) {
+        var str="";
+        for(var elem of arr) {
+            str=elem;
         }
-        btns+=`<div>${i}</div>`;
-    }    
-    str=`
-        <div class='jsch-datetime-picker-second-step' id='jsch-second-step'>
-            ${btns}
-        </div>
-    `;
-    return str;
-}
+        inputElement.value=str;
+    }
 
-function jschThirdStepChoose() {  
-    var btns='';
-    for(i=1;i<=12;i++) {
-        if(i<10) {
-            i='0'+i;
+    function jschSteps(step) {
+        
+        switch(step) {
+            case 1: first=1;last=2; break;
+            case 2: first=1;last=100; break;
+            case 3: first=1;last=12; break;
+            case 4: first=1;last=31; break;
+            case 5: first=0;last=24; break;
+            case 6: first=0;last=60; break;
+            case 7: first=0;last=60; break;
+        }   
+
+        var btns='';
+        for(i=first;i<=last;i++) {
+            if(i<10) {
+                i='0'+i;
+            }
+            btns+=`<div>${i}</div>`;
         }
-        btns+=`<div>${i}</div>`;
-    }    
-    str=`
-        <div class='jsch-datetime-picker-third-step' id='jsch-third-step'>
-            ${btns}
-        </div>
-    `;
-    return str;
-}
 
-
-function jschFourthStepChoose() {  
-    var btns='';
-    for(i=1;i<=31;i++) {
-        if(i<10) {
-            i='0'+i;
+        str=`
+            <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${e}'>
+                ${btns}
+            </div>
+        `;
+        
+        if(step==1) {
+            str=`
+                <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${e}'>
+                    <div>19</div>
+                    <div>20</div>
+                </div>
+            `;
         }
-        btns+=`<div>${i}</div>`;
-    }    
-    str=`
-        <div class='jsch-datetime-picker-fourth-step' id='jsch-fourth-step'>
-            ${btns}
-        </div>
-    `;
-    return str;
-}
 
-function jschFifthStepChoose() {  
-    var btns='';
-    for(i=1;i<24;i++) {
-        if(i<10) {
-            i='0'+i;
-        }
-        btns+=`<div>${i}</div>`;
-    }    
-    str=`
-        <div class='jsch-datetime-picker-fifth-step' id='jsch-fifth-step'>
-            ${btns}
-        </div>
-    `;
-    return str;
-}
+        return str;    
+    }
 
-
-function jschSixthStepChoose() {  
-    var btns='';
-    for(i=0;i<60;i++) {
-        if(i<10) {
-            i='0'+i;
-        }
-        btns+=`<div>${i}</div>`;
-    }    
-    str=`
-        <div class='jsch-datetime-picker-sixth-step' id='jsch-sixth-step'>
-            ${btns}
-        </div>
-    `;
-    return str;
-}
-
-function jschSeventhStepChoose() {  
-    var btns='';
-    for(i=0;i<60;i++) {
-        if(i<10) {
-            i='0'+i;
-        }
-        btns+=`<div>${i}</div>`;
-    }    
-    str=`
-        <div class='jsch-datetime-picker-seventh-step' id='jsch-seventh-step'>
-            ${btns}
-        </div>
-    `;
-    return str;
+    e++;
 }
