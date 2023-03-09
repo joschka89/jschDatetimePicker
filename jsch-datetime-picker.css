@@ -1,0 +1,95 @@
+.jsch-datetime-picker {
+    position: absolute;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width:300px;
+    height: 200px;
+    border-radius:3px;
+    color:silver;
+
+}
+
+.jsch-datetime-picker-nav { 
+    color: #fff;
+    height:10%;
+    border-bottom: 1px solid #f7f7f7;
+    background-color:silver;
+}
+
+.jsch-datetime-picker-nav div:nth-child(1) {
+    display:inline-block;
+    width:48%;
+    text-align:center;
+}
+
+.jsch-datetime-picker-nav div:nth-child(2) {
+    display:inline-block;
+    width:48%;
+    text-align:center;
+}
+
+.jsch-datetimepicker-area {
+    height:86.5%;
+    display:inline-block;
+    width:98%;
+    padding:1%;
+    overflow: auto;
+}
+
+.jsch-datetimepicker-area div div {
+    float:left;
+    border-radius:3px;
+    cursor:pointer;
+    text-align:center;
+}
+
+.jsch-datetimepicker-area div div:hover {
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
+
+.jsch-datetime-picker .jsch-datetime-picker-first-step {
+    display:inline-block;
+    width:98%;
+    padding:1%;
+}
+
+.jsch-datetime-picker-first-step div {
+    font-size:750%;
+    width:48%;
+}
+
+.jsch-datetime-picker-second-step div {
+    font-size:120%;
+    height:14%;
+    width:14%;
+}
+
+.jsch-datetime-picker-third-step div {
+    font-size:150%;
+    height:14%;
+    width:48%;
+}
+
+.jsch-datetime-picker-fourth-step div {
+    font-size:180%;
+    height:14%;
+    width:14%;
+}
+
+.jsch-datetime-picker-fifth-step div {
+    font-size:200%;
+    height:14%;
+    width:14%;
+}
+
+.jsch-datetime-picker-sixth-step div {
+    font-size:200%;
+    height:14%;
+    width:14%;
+}
+
+.jsch-datetime-picker-seventh-step div {
+    font-size:200%;
+    height:14%;
+    width:14%;
+}
+
