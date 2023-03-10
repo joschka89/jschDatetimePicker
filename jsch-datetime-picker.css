@@ -5,34 +5,35 @@
     width:300px;
     height: 200px;
     border-radius:3px;
+    background-color:#fff;
     color:silver;
-
 }
 
 .jsch-datetime-picker-nav { 
     color: #fff;
     height:10%;
-    border-bottom: 1px solid #f7f7f7;
-    background-color:silver;
+    color:silver; 
 }
 .jsch-datetime-picker-nav div {
     text-align:center;
 }
 .jsch-datetime-picker-nav div:nth-child(1) {
     display:inline-block;
-    width:30%;
+    width:32%;
     cursor:pointer;
+    text-decoration: underline;
 }
 
 .jsch-datetime-picker-nav div:nth-child(2) {
     display:inline-block;
-    width:30%;
+    width:32%;  
 }
 
 .jsch-datetime-picker-nav div:nth-child(3) {
     display:inline-block;
-    width:30%;
+    width:32%;
     cursor:pointer;
+    text-decoration: underline;
 }
 
 .jsch-datetimepicker-area {
@@ -62,7 +63,7 @@
 
 .jsch-datetime-picker-1-step div {
     font-size:750%;
-    width:48%;
+    width:50%;
 }
 
 .jsch-datetime-picker-2-step div {
@@ -101,3 +102,19 @@
     width:14%;
 }
 
+.jsch-noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+}
+/*
+@media only screen and (max-width: 420px) {
+    body {
+      background-color: red;
+    }
+}
+*/
