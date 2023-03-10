@@ -159,9 +159,9 @@ for(const inputElement of inputElements) {
             case 2: first=0;last=99; break;
             case 3: first=1;last=12; break;
             case 4: first=1;last=jschGetDaysOfMonth(arr); break;
-            case 5: first=0;last=24; break;
-            case 6: first=0;last=60; break;
-            case 7: first=0;last=60; break;
+            case 5: first=0;last=23; break;
+            case 6: first=0;last=59; break;
+            case 7: first=0;last=59; break;
         }   
 
         var btns='';
@@ -181,8 +181,8 @@ for(const inputElement of inputElements) {
         if(step==1) {
             str=`
                 <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
-                    <div>19</div>
                     <div>20</div>
+                    <div>19</div>
                 </div>
             `;
         }

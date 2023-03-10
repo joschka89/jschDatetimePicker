@@ -7,6 +7,7 @@
     border-radius:3px;
     background-color:#fff;
     color:silver;
+    
 }
 
 .jsch-datetime-picker-nav { 
@@ -45,61 +46,51 @@
 }
 
 .jsch-datetimepicker-area div div {
+    margin:1%;
     float:left;
     border-radius:3px;
     cursor:pointer;
     text-align:center;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 2px;
 }
 
 .jsch-datetimepicker-area div div:hover {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
-.jsch-datetime-picker-style .jsch-datetime-picker-1-step {
-    display:inline-block;
-    width:98%;
-    padding:1%;
-}
-
 .jsch-datetime-picker-1-step div {
     font-size:750%;
-    width:50%;
+    width:48%;
 }
 
 .jsch-datetime-picker-2-step div {
     font-size:120%;
-    height:14%;
-    width:14%;
+    width:12.25%;
 }
 
 .jsch-datetime-picker-3-step div {
-    font-size:150%;
-    height:14%;
-    width:48%;
+    font-size:190%;
+    width:31.25%;
 }
 
 .jsch-datetime-picker-4-step div {
-    font-size:180%;
-    height:14%;
-    width:14%;
+    font-size:170%;
+    width:12.25%;
 }
 
 .jsch-datetime-picker-5-step div {
-    font-size:200%;
-    height:14%;
-    width:14%;
+    font-size:170%;
+    width:12.25%;
 }
 
 .jsch-datetime-picker-6-step div {
-    font-size:200%;
-    height:14%;
-    width:14%;
+    font-size:170%;
+    width:12.25%;
 }
 
 .jsch-datetime-picker-7-step div {
-    font-size:200%;
-    height:14%;
-    width:14%;
+    font-size:170%;
+    width:12.25%;
 }
 
 .jsch-noselect {
@@ -111,10 +102,13 @@
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
 }
-/*
+
+/*responsive*/
+
 @media only screen and (max-width: 420px) {
-    body {
-      background-color: red;
+    .jsch-datetime-picker-style {
+        left:0px !important;
+        min-width:260px !important;
+        width:100% !important;
     }
 }
-*/
