@@ -43,6 +43,7 @@
     width:98%;
     padding:1%;
     overflow: auto;
+    box-sizing: initial;
 }
 
 .jsch-datetimepicker-area div div {

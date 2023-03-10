@@ -71,7 +71,7 @@ for(const inputElement of inputElements) {
 
     function jschStepHandler() {   
         var inputLength=jschAddInputValue().length;
-
+        var step=1;
         switch(inputLength) {
             case 0: step=1; break;
             case 2: step=2; break;
