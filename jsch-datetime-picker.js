@@ -1,6 +1,5 @@
 // query
 var inputElements=document.getElementsByClassName('jsch-datetime-picker');
-
 // set unique ID for inputs
 for (let i = 0; i < inputElements.length; i++) {
     inputElements[i].setAttribute('id','jsch-'+(i+1));
@@ -62,26 +61,28 @@ for(const inputElement of inputElements) {
         </div>`;
     }
 
-    function jschAddInputValue() {
-        var UniqueId=inputElement.id;
-        
-        var inputLength=document.getElementById(UniqueId).value;
+    function jschAddInputValue() {     
+        var inputLength=document.getElementById(inputElement.id).value;
         return inputLength;
     }
 
     function jschStepHandler() {   
         var inputLength=jschAddInputValue().length;
         var step=1;
-        switch(inputLength) {
-            case 0: step=1; break;
-            case 2: step=2; break;
-            case 5: step=3; break;
-            case 8: step=4; break;
-            case 11: step=5; break;
-            case 14: step=6; break;
-            case 17: step=7; break;
+
+        var StepsObject= {
+            0: {Step:1,Select:'Year',Delimiter:''},
+            2: {Step:2,Select:'Year',Delimiter:'-'},
+            5: {Step:3,Select:'Month',Delimiter:'-'},
+            8: {Step:4,Select:'Day',Delimiter:' '},
+            11: {Step:5,Select:'Hour',Delimiter:':'},
+            14: {Step:6,Select:'Minute',Delimiter:':'},
+            17: {Step:7,Select:'Seconds',Delimiter:''},
         }
-        return step;
+
+        console.log(StepsObject[inputLength]);
+
+        return StepsObject[inputLength];
     }
 
     function jschChooser() {
@@ -96,23 +97,13 @@ for(const inputElement of inputElements) {
             jschClose();
         }
 
-        var arrayy=[
-            ["Year",""],
-            ["Year","-"],
-            ["Month","-"],
-            ["Day"," "],
-            ["Hour",":"],
-            ["Minute",":"],
-            ["Seconds",""],
-        ];
-
-        var step=jschStepHandler();
-        var sign=arrayy[step-1][1];
-        var nextchoose=arrayy[step-1][0];
+        var step=jschStepHandler().Step;
+        var sign=jschStepHandler().Delimiter;
+        var select=jschStepHandler().Select;
 
         element.innerHTML=jschSteps(step);
 
-        document.getElementById(`jsch-choose-${UniqueId}`).innerHTML=nextchoose;
+        document.getElementById(`jsch-choose-${UniqueId}`).innerHTML=select;
         var children=document.getElementById(`jsch-${step}-step-${UniqueId}`).children;  
             
         for(var child of children) {
@@ -152,8 +143,7 @@ for(const inputElement of inputElements) {
         document.getElementById(inputElement.id).value=str;
     }
 
-    function jschSteps(step) {
-   
+    function jschSteps(step) { 
         switch(step) {
             case 1: first=1;last=2; break;
             case 2: first=0;last=99; break;
@@ -163,7 +153,6 @@ for(const inputElement of inputElements) {
             case 6: first=0;last=59; break;
             case 7: first=0;last=59; break;
         }   
-
         var btns='';
         for(i=first;i<=last;i++) {
             if(i<10) {
@@ -171,13 +160,11 @@ for(const inputElement of inputElements) {
             }
             btns+=`<div>${i}</div>`;
         }
-
         str=`
             <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
                 ${btns}
             </div>
-        `;
-        
+        `;        
         if(step==1) {
             str=`
                 <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
@@ -186,7 +173,6 @@ for(const inputElement of inputElements) {
                 </div>
             `;
         }
-
         return str;    
     }
 }
