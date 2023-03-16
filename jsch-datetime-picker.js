@@ -43,10 +43,13 @@ for(const inputElement of inputElements) {
         }
         
         var rect = document.getElementById(UniqueId).getBoundingClientRect();
-        var inputHeight=document.getElementById(UniqueId).offsetHeight ;
+        var inputHeight=document.getElementById(UniqueId).offsetHeight;
         var t=rect.top+inputHeight+2;
         var l=rect.left;
-
+        let windowheight = window.innerHeight;
+        if((windowheight-t) < 200) {
+            var t=rect.top-200-2;
+        }
         var div = document.createElement("div");
         var createdDiv=document.body.appendChild(div);
 
@@ -61,29 +64,34 @@ for(const inputElement of inputElements) {
         </div>`;
     }
 
-    function jschAddInputValue() {     
-        var inputLength=document.getElementById(inputElement.id).value;
-        return inputLength;
-    }
-
-    function jschStepHandler() {   
-        var inputLength=jschAddInputValue().length;
-        var step=1;
-
-        var StepsObject= {
-            0: {Step:1,Select:'Year',Delimiter:''},
-            2: {Step:2,Select:'Year',Delimiter:'-'},
-            5: {Step:3,Select:'Month',Delimiter:'-'},
-            8: {Step:4,Select:'Day',Delimiter:' '},
-            11: {Step:5,Select:'Hour',Delimiter:':'},
-            14: {Step:6,Select:'Minute',Delimiter:':'},
-            17: {Step:7,Select:'Seconds',Delimiter:''},
+    function jschSteps(step) { 
+        switch(step) {
+            case 1: first=19;last=20; break;
+            case 2: first=0;last=99; break;
+            case 3: first=1;last=12; break;
+            case 4: first=1;last=jschGetDaysOfMonth(arr); break;
+            case 5: first=0;last=23; break;
+            case 6: first=0;last=59; break;
+            case 7: first=0;last=59; break;
+        }   
+        var btns='';
+        for(i=first;i<=last;i++) {
+            if(i<10) i='0'+i;
+            btns+=`<div>${i}</div>`;
         }
-
-        console.log(StepsObject[inputLength]);
-
-        return StepsObject[inputLength];
+        str=`<div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
+                ${btns}
+            </div>`;        
+        return str;    
     }
+    
+    function jschRenderValue(arr) {
+        var str="";
+        for(var elem of arr) {
+            str=elem;
+        }
+        document.getElementById(inputElement.id).value=str;
+    }    
 
     function jschChooser() {
         var UniqueId=inputElement.id;
@@ -116,6 +124,22 @@ for(const inputElement of inputElements) {
 
     }
 
+    function jschStepHandler() {   
+        var inputLength=jschAddInputValue().length;
+        var step=1;
+
+        var StepsObject= {
+            0: {Step:1,Select:'Year',Delimiter:''},
+            2: {Step:2,Select:'Year',Delimiter:'-'},
+            5: {Step:3,Select:'Month',Delimiter:'-'},
+            8: {Step:4,Select:'Day',Delimiter:' '},
+            11: {Step:5,Select:'Hour',Delimiter:':'},
+            14: {Step:6,Select:'Minute',Delimiter:':'},
+            17: {Step:7,Select:'Seconds',Delimiter:''},
+        }
+        return StepsObject[inputLength];
+    }    
+
     function jschBackStep() {
         arr.pop();
         jschRenderValue(arr)
@@ -135,45 +159,9 @@ for(const inputElement of inputElements) {
         node.style.display ='none';    
     }
 
-    function jschRenderValue(arr) {
-        var str="";
-        for(var elem of arr) {
-            str=elem;
-        }
-        document.getElementById(inputElement.id).value=str;
-    }
-
-    function jschSteps(step) { 
-        switch(step) {
-            case 1: first=1;last=2; break;
-            case 2: first=0;last=99; break;
-            case 3: first=1;last=12; break;
-            case 4: first=1;last=jschGetDaysOfMonth(arr); break;
-            case 5: first=0;last=23; break;
-            case 6: first=0;last=59; break;
-            case 7: first=0;last=59; break;
-        }   
-        var btns='';
-        for(i=first;i<=last;i++) {
-            if(i<10) {
-                i='0'+i;
-            }
-            btns+=`<div>${i}</div>`;
-        }
-        str=`
-            <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
-                ${btns}
-            </div>
-        `;        
-        if(step==1) {
-            str=`
-                <div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
-                    <div>20</div>
-                    <div>19</div>
-                </div>
-            `;
-        }
-        return str;    
+    function jschAddInputValue() {     
+        var inputLength=document.getElementById(inputElement.id).value;
+        return inputLength;
     }
 }
 
