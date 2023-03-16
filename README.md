@@ -4,4 +4,4 @@
 
 add 'jsch-datetime-picker' to classname then, add 'date' or 'datetime'
 
-<input type="text" class="jsch-datetime-picker date" />
+<input type="text" class="jsch-datetime-picker date" /> 
