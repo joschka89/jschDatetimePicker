@@ -113,3 +113,25 @@
         width:100% !important;
     }
 }
+
+/*animations*/
+
+.reveal-05 {
+    animation-name: reveal_05;
+    animation-duration: 0.5s;
+}
+  
+@keyframes reveal_05 {
+    0%   {opacity:0;}
+    100% {opacity:1;}
+}
+
+.hide-05 {
+    animation-name: hide05;
+    animation-duration: 0.5s;
+}
+  
+@keyframes hide05 {
+    0%   {opacity:1;}
+    100% {opacity:0;visibility:hidden;}
+}

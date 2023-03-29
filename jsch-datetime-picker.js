@@ -37,6 +37,7 @@ for(const inputElement of inputElements) {
         //if exist
         var node = document.getElementById(`jsch-datetimepicker-${UniqueId}`);
         if(node) {
+            node.classList.remove("hide-05");
             node.style.display='inherit';
             document.getElementById(inputElement.id).value='';
             return;
@@ -53,7 +54,7 @@ for(const inputElement of inputElements) {
         var div = document.createElement("div");
         var createdDiv=document.body.appendChild(div);
 
-        createdDiv.innerHTML+=`<div class="jsch-datetime-picker-style jsch-noselect" id="jsch-datetimepicker-${UniqueId}" 
+        createdDiv.innerHTML+=`<div class="jsch-datetime-picker-style jsch-noselect reveal-05" id="jsch-datetimepicker-${UniqueId}" 
         style="top:${t}px;left:${l}px">
             <div class='jsch-datetime-picker-nav'>
                 <div id='jsch-backstep-${UniqueId}'>Back</div>    
@@ -156,7 +157,11 @@ for(const inputElement of inputElements) {
         while(arr.length!=0) {
             arr.pop();
         }
-        node.style.display ='none';    
+        node.classList.add("hide-05"); 
+        setTimeout(() =>{
+            node.classList.remove("reveal-05"); 
+            node.style.display ='none';
+        }, 450);  
     }
 
     function jschAddInputValue() {     
