@@ -39,7 +39,7 @@ for(const inputElement of inputElements) {
         if(node) {
             node.classList.remove("hide-05");
             node.style.display='inherit';
-            document.getElementById(inputElement.id).value='';
+            //document.getElementById(inputElement.id).value='';
             return;
         }
         
@@ -66,6 +66,7 @@ for(const inputElement of inputElements) {
     }
 
     function jschSteps(step) { 
+        var str='';
         switch(step) {
             case 1: first=19;last=20; break;
             case 2: first=0;last=99; break;
@@ -80,9 +81,13 @@ for(const inputElement of inputElements) {
             if(i<10) i='0'+i;
             btns+=`<div>${i}</div>`;
         }
-        str=`<div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
+
+            str=`<div class='jsch-datetime-picker-${step}-step' id='jsch-${step}-step-${inputElement.id}'>
                 ${btns}
-            </div>`;        
+            </div>`; 
+        
+
+       
         return str;    
     }
     
@@ -102,27 +107,27 @@ for(const inputElement of inputElements) {
         //if datetime, then 7 step choose, if date, then 4 step
         var node=document.getElementById(UniqueId).className;
         var nodeArr=node.split(" ");
-        if((arr.length == 7 && nodeArr[1] == 'datetime') || (arr.length == 4 && nodeArr[1] == 'date')) {
+        if((arr.length >= 7 && nodeArr[1] == 'datetime') || (arr.length >= 4 && nodeArr[1] == 'date')) {
             jschClose();
+        } else {
+            var step=jschStepHandler().Step;
+            var sign=jschStepHandler().Delimiter;
+            var select=jschStepHandler().Select;
+    
+            element.innerHTML=jschSteps(step);
+            document.getElementById(`jsch-choose-${UniqueId}`).innerHTML=select;
+            var children=document.getElementById(`jsch-${step}-step-${UniqueId}`).children;  
+                
+            for(var child of children) {
+                child.onclick = function(e) {         
+                    
+                    var inputval=jschAddInputValue();                                                      
+                    arr.push(inputval+e.target.innerText+sign);  
+                    jschStep();                   
+                    
+                }
+            }                 
         }
-
-        var step=jschStepHandler().Step;
-        var sign=jschStepHandler().Delimiter;
-        var select=jschStepHandler().Select;
-
-        element.innerHTML=jschSteps(step);
-
-        document.getElementById(`jsch-choose-${UniqueId}`).innerHTML=select;
-        var children=document.getElementById(`jsch-${step}-step-${UniqueId}`).children;  
-            
-        for(var child of children) {
-            child.onclick = function(e) {         
-                var inputval=jschAddInputValue();                                                      
-                arr.push(inputval+e.target.innerText+sign);  
-                jschStep();                   
-            }
-        }     
-
     }
 
     function jschStepHandler() {   
@@ -136,7 +141,7 @@ for(const inputElement of inputElements) {
             8: {Step:4,Select:'Day',Delimiter:' '},
             11: {Step:5,Select:'Hour',Delimiter:':'},
             14: {Step:6,Select:'Minute',Delimiter:':'},
-            17: {Step:7,Select:'Seconds',Delimiter:''},
+            17: {Step:7,Select:'Seconds',Delimiter:''}
         }
         return StepsObject[inputLength];
     }    
